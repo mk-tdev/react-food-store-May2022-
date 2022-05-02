@@ -12,7 +12,6 @@ body {
   padding: 0;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
+.back-drop-modal {
+  background-color: rgba(103, 106, 108, 0.57);
 }

@@ -1,23 +1,22 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import React from "react";
+import Cart from "./containers/Cart";
+import Foods from "./containers/Foods";
+import Header from "./containers/Header";
 
 function App() {
+  const [showCart, setShowCart] = React.useState(false);
+
+  const toggleCartDisplay = () => {
+    setShowCart(!showCart);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <Header toggleCartDisplay={toggleCartDisplay} />
+
+      <Foods />
+      {showCart && <Cart onClose={toggleCartDisplay}/>}
     </div>
   );
 }

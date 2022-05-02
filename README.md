@@ -8,8 +8,8 @@ npx create-react-app food-store --use-npm
 
 ## Install tailwind and add dependencies
 
-(https://tailwindcss.com/docs/guides/create-react-app)
-npm install -D tailwindcss postcss autoprefixer
+(https://tailwindcss.com/docs/guides/create-react-app)\
+npm install -D tailwindcss postcss autoprefixer\
 npx tailwindcss init -p
 
 ## Available Scripts
