@@ -3,6 +3,7 @@ import React from "react";
 import Cart from "./containers/Cart";
 import Foods from "./containers/Foods";
 import Header from "./containers/Header";
+import CartProvider from "./contexts/CartProvider";
 
 function App() {
   const [showCart, setShowCart] = React.useState(false);
@@ -12,12 +13,12 @@ function App() {
   };
 
   return (
-    <div>
+    <CartProvider>
       <Header toggleCartDisplay={toggleCartDisplay} />
 
       <Foods />
-      {showCart && <Cart onClose={toggleCartDisplay}/>}
-    </div>
+      {showCart && <Cart onClose={toggleCartDisplay} />}
+    </CartProvider>
   );
 }
 

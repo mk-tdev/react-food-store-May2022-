@@ -7,7 +7,7 @@ const Modal = ({ children, closeModal }) => {
       className="fixed back-drop-modal w-screen z-50 top-0 left-0 h-screen justify-center items-center flex align-middle"
       onClick={closeModal}
     >
-      <div className="z-10">{children}</div>
+      <div className="app-modal">{children}</div>
     </div>,
     document.querySelector("#backdrop-modal-root")
   );

@@ -1,10 +1,19 @@
-import React from "react";
+import React, { useRef } from "react";
 
-export default function AddFood() {
+export default function AddFood({ addToCart }) {
+  const amountInputRef = useRef();
+
+  const submitHandler = (e) => {
+    e.preventDefault();
+    const amount = amountInputRef.current.value;
+    addToCart(amount);
+  };
+
   return (
-    <form>
+    <form onSubmit={submitHandler}>
       <div className="flex justify-between gap-2 w-6/12">
         <input
+          ref={amountInputRef}
           type="number"
           min={1}
           max={5}

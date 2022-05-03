@@ -12,6 +12,7 @@ function Foods() {
       <div className="flex flex-wrap my-3 -mx-5">
         {MOCK_FOOD_LIST.map((food) => (
           <FoodCard
+            id={food.id}
             key={food.id}
             name={food.name}
             description={food.description}

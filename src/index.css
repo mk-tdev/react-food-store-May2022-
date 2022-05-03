@@ -15,3 +15,18 @@ body {
 .back-drop-modal {
   background-color: rgba(103, 106, 108, 0.57);
 }
+
+.app-modal {
+  animation: slide-down 300ms ease-out forwards;
+}
+
+@keyframes slide-down {
+  from {
+    opacity: 0;
+    transform: translateY(-3rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
