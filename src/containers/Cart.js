@@ -1,5 +1,4 @@
 import React from "react";
-import AddFood from "../components/AddFood";
 import Modal from "../components/Modal";
 import CartContext from "../contexts/cart-context";
 
@@ -9,14 +8,14 @@ function Cart({ onClose }) {
   const cartItems = cartCtx.items;
   const hasItems = cartCtx.items.length > 0;
 
-  console.log(cartCtx);
-
-  const cartItemRemoveHandler = (id) => {
+  const cartItemRemoveHandler = (e, id) => {
+    e.stopPropagation();
     cartCtx.removeItem(id);
   };
 
-  const carItemAddHandler = (id, amt) => {
-    cartCtx.updateItem(id, amt);
+  const carItemAddHandler = (e, item) => {
+    e.stopPropagation();
+    cartCtx.addItem({ ...item, amount: 1 });
   };
 
   return (
@@ -37,13 +36,13 @@ function Cart({ onClose }) {
             <div className="flex flex-row items-center gap-2">
               <button
                 className="bg-green-600 text-white rounded px-2 py-1"
-                onClick={() => cartItemRemoveHandler(item.id)}
+                onClick={(e) => carItemAddHandler(e, item)}
               >
                 +
               </button>
               <button
                 className="bg-red-600 text-white rounded px-2 py-1"
-                onClick={() => cartItemRemoveHandler(item.id)}
+                onClick={(e) => cartItemRemoveHandler(e, item.id)}
               >
                 -
               </button>

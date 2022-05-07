@@ -31,6 +31,34 @@ const cartReducer = (state, action) => {
       }
 
     case "REMOVE_ITEM":
+      const index = state.items.findIndex((item) => item.id === action.payload);
+      const existingItemVal = state.items[index];
+      let updatedItems;
+
+      if (existingItemVal) {
+        if (+existingItemVal.amount === 1) {
+          updatedItems = state.items.filter(
+            (item) => item.id !== action.payload
+          );
+        } else {
+          const updatedItem = {
+            ...existingItemVal,
+            amount: existingItemVal.amount - 1,
+          };
+          updatedItems = [
+            ...state.items.slice(0, index),
+            updatedItem,
+            ...state.items.slice(index + 1),
+          ];
+        }
+
+        return {
+          ...state,
+          items: updatedItems,
+          totalAmount: state.totalAmount - existingItemVal.price,
+        };
+      }
+
       return {
         ...state,
         items: state.items.filter((item) => item.id !== action.payload),
@@ -69,9 +97,10 @@ function CartProvider({ children }) {
       dispatchCartAction({ type: "ADD_ITEM", payload: item });
     },
     removeItem: (id) => {
-      const index = cartContext.items.findIndex((item) => item.id === id);
-      cartContext.items.splice(index, 1);
-      cartContext.totalAmount -= cartContext.items[index].price;
+      dispatchCartAction({ type: "REMOVE_ITEM", payload: id });
+      // const index = cartContext.items.findIndex((item) => item.id === id);
+      // cartContext.items.splice(index, 1);
+      // cartContext.totalAmount -= cartContext.items[index].price;
     },
   };
 
