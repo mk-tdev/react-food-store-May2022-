@@ -1,30 +1,30 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import useInput from "../hooks/useInput";
 
 function SingleInput() {
-  const [name, setName] = React.useState("");
-  const [isNameTouched, setIsNameTouched] = React.useState(false);
+  const validator = (value) => value.trim() !== "";
+  const [
+    enteredValue,
+    inputHandler,
+    blurHandler,
+    hasError,
+    isValueValid,
+    resetValues,
+  ] = useInput(validator);
+  const [formValidity, setFormValidity] = useState(false);
 
-  const nameValidity = name.trim() !== "";
-
-  const nameInputHandler = (e) => {
-    setName(e.target.value);
-    setIsNameTouched(true);
-  };
-
-  const nameBlurHandler = () => {
-    setIsNameTouched(true);
-  };
+  useEffect(() => {
+    setFormValidity(isValueValid);
+  }, [isValueValid]);
 
   const formSubmitHandler = (e) => {
     e.preventDefault();
-    setIsNameTouched(true);
 
-    if (!nameValidity) {
+    if (!isValueValid) {
       console.log("Form invalid");
       return;
     }
-    setName("");
-    setIsNameTouched(false);
+    resetValues();
   };
 
   return (
@@ -34,17 +34,16 @@ function SingleInput() {
           className="border border-slate-600 p-3 outline-none "
           type="text"
           placeholder="Enter your name"
-          value={name}
-          onBlur={nameBlurHandler}
-          onChange={nameInputHandler}
+          value={enteredValue}
+          onBlur={blurHandler}
+          onChange={inputHandler}
         />
-        {!nameValidity && isNameTouched && (
-          <p className="text-orange-800 py-2">Invalid input</p>
-        )}
+        {hasError && <p className="text-orange-800 py-2">Invalid input</p>}
 
         <div className="my-2 flex justify-start">
           <button
-            className="bg-slate-800 text-white px-3 py-2 rounded"
+            disabled={!formValidity}
+            className="bg-slate-800 text-white px-3 py-2 rounded disabled:opacity-50"
             type="submit"
           >
             Submit
