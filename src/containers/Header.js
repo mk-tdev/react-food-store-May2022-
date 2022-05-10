@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import CartContext from "../contexts/cart-context";
 // import foodBanner from "../assets/images/food-banner.jpg";
 // import cartIcon from "../assets/images/cart.png";
 
 function Header({ toggleCartDisplay }) {
-  const cartItems = React.useContext(CartContext);
+  const cartItems = useContext(CartContext);
   const noOfItems = cartItems.items.reduce((acc, item) => {
     return +acc + +item.amount;
   }, 0);
@@ -15,7 +15,6 @@ function Header({ toggleCartDisplay }) {
   } bg-gray-800 text-white rounded px-3 py-2`;
 
   useEffect(() => {
-    console.log(noOfItems);
     if (noOfItems === 0) {
       return;
     }

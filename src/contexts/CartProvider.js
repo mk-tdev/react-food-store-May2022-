@@ -91,16 +91,10 @@ function CartProvider({ children }) {
     items: cartState.items,
     totalAmount: cartState.totalAmount,
     addItem: (item) => {
-      // cartContext.items.push(item);
-      // cartContext.totalAmount += item.price;
-
       dispatchCartAction({ type: "ADD_ITEM", payload: item });
     },
     removeItem: (id) => {
       dispatchCartAction({ type: "REMOVE_ITEM", payload: id });
-      // const index = cartContext.items.findIndex((item) => item.id === id);
-      // cartContext.items.splice(index, 1);
-      // cartContext.totalAmount -= cartContext.items[index].price;
     },
   };
 

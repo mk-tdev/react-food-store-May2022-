@@ -4,7 +4,7 @@ import CartContext from "../contexts/cart-context";
 
 function Cart({ onClose }) {
   const cartCtx = React.useContext(CartContext);
-  const totalAmount = cartCtx.totalAmount.toFixed(2) | 0;
+  const totalAmount = cartCtx.totalAmount;
   const cartItems = cartCtx.items;
   const hasItems = cartCtx.items.length > 0;
 
@@ -52,7 +52,7 @@ function Cart({ onClose }) {
 
         <div className="flex justify-between px-2 py-3">
           <span>Total Amount</span>
-          <span className="font-semibold">$ {totalAmount}</span>
+          <span className="font-semibold">$ {totalAmount.toFixed(2)}</span>
         </div>
 
         <div className="flex justify-end gap-2 mt-3 mx-4">
