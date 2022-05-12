@@ -4,7 +4,7 @@ import Cart from "./containers/Cart";
 import Foods from "./containers/Foods";
 import Header from "./containers/Header";
 import CartProvider from "./contexts/CartProvider";
-import FormContainer from "./playground/form-container";
+// import FormContainer from "./playground/form-container";
 
 function App() {
   const [showCart, setShowCart] = React.useState(false);
@@ -17,10 +17,10 @@ function App() {
     <CartProvider>
       <Header toggleCartDisplay={toggleCartDisplay} />
 
-      <FormContainer />
+      {/* <FormContainer /> */}
 
-      {/* <Foods />
-      {showCart && <Cart onClose={toggleCartDisplay} />} */}
+      <Foods />
+      {showCart && <Cart onClose={toggleCartDisplay} />}
     </CartProvider>
   );
 }

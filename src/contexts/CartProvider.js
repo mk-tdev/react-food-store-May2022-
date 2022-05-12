@@ -96,6 +96,9 @@ function CartProvider({ children }) {
     removeItem: (id) => {
       dispatchCartAction({ type: "REMOVE_ITEM", payload: id });
     },
+    clearCart: () => {
+      dispatchCartAction({ type: "CLEAR_CART" });
+    },
   };
 
   return (

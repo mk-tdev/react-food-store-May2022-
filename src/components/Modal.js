@@ -5,7 +5,7 @@ const Modal = ({ children, closeModal }) => {
   return ReactDOM.createPortal(
     <div
       className="fixed back-drop-modal w-screen z-50 top-0 left-0 h-screen justify-center items-center flex align-middle"
-      onClick={closeModal}
+      // onClick={closeModal}
     >
       <div className="app-modal">{children}</div>
     </div>,

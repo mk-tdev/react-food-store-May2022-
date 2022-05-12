@@ -1,9 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import Modal from "../components/Modal";
+import Checkout from "./Checkout";
 import CartContext from "../contexts/cart-context";
+import { postOrdersUrl } from "../misc";
 
 function Cart({ onClose }) {
   const cartCtx = React.useContext(CartContext);
+  const [showCheckout, setShowCheckout] = useState(false);
+  const [loading, setLoading] = useState(false);
   const totalAmount = cartCtx.totalAmount;
   const cartItems = cartCtx.items;
   const hasItems = cartCtx.items.length > 0;
@@ -18,9 +22,33 @@ function Cart({ onClose }) {
     cartCtx.addItem({ ...item, amount: 1 });
   };
 
+  const checkoutHandler = () => {
+    setShowCheckout(true);
+  };
+
+  const onConfirmHandler = async (data) => {
+    console.log(data);
+    setLoading(true);
+    const response = await fetch(postOrdersUrl, {
+      method: "POST",
+      body: JSON.stringify({
+        user: data,
+        order: cartItems,
+      }),
+    });
+
+    if (!response.ok) {
+      // throw new Error("Something went wrong!");
+    }
+    setLoading(false);
+    cartCtx.clearCart();
+    // setShowCheckout(false);
+    onClose();
+  };
+
   return (
     <Modal closeModal={onClose}>
-      <div className="h-100  bg-white rounded pb-3 w-96  overflow-scroll">
+      <div className="h-100 modal-width bg-white rounded pb-3 md:modal-width overflow-scroll">
         <h1 className="mb-3 bg-cyan-800 text-white px-2 py-3 ">Cart</h1>
 
         {cartItems.map((item) => (
@@ -55,14 +83,24 @@ function Cart({ onClose }) {
           <span className="font-semibold">$ {totalAmount.toFixed(2)}</span>
         </div>
 
-        <div className="flex justify-end gap-2 mt-3 mx-4">
-          {hasItems && (
-            <button className="p-2 bg-cyan-800 text-white">Checkout</button>
-          )}
-          <button className="p-2 bg-cyan-800 text-white" onClick={onClose}>
-            Close
-          </button>
-        </div>
+        {showCheckout && (
+          <Checkout loading={loading} onClose={onClose} onConfirmHandler={onConfirmHandler} />
+        )}
+        {!showCheckout && (
+          <div className="flex justify-end gap-2 mt-3 mx-4">
+            {hasItems && (
+              <button
+                className="p-2 bg-cyan-800 text-white"
+                onClick={checkoutHandler}
+              >
+                Checkout
+              </button>
+            )}
+            <button className="p-2 bg-cyan-800 text-white" onClick={onClose}>
+              Close
+            </button>
+          </div>
+        )}
       </div>
     </Modal>
   );
